@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AcademyContext>(ops => ops.UseSqlServer(builder.Configuration.GetConnectionString("Academy")));
 
-builder.Services.AddTransient<IAcademyService, AcademyService>();
+builder.Services.AddScoped<IAcademyService, AcademyService>();
 
 var app = builder.Build();
 

@@ -2,44 +2,41 @@
 using AcademyAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace AcademyAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class DepartmentController : ControllerBase
+public class TeacherController : ControllerBase
 {
     private readonly IAcademyService _academyService;
 
-    public DepartmentController(IAcademyService academyService)
+    public TeacherController(IAcademyService academyService)
     {
         _academyService = academyService;
     }
 
-    [HttpPost("AddDepartment")]
-    public async Task<IActionResult> AddAcync(string name)
+    [HttpPost("AddTeacher")]
+    public async Task<IActionResult> AddAsync([FromBody] Teacher teacher)
     {
         try
         {
-            var res = await _academyService.AddDepartmentAsync(name);
+            var res = await _academyService.AddTeacherAsync(teacher);
             return Ok(res);
         }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
-
     }
 
-    [HttpPut("EditDepartment/{id}")]
-    public async Task<IActionResult> EditAsync(string id, string name)
+    [HttpPatch("EditTeacher/{id}")]
+    public async Task<IActionResult> EditAsync(string id, [FromBody] Teacher teacher)
     {
-
         try
         {
-            await _academyService.EditDepartmentAsync(id, name);
-            return Ok();
+            var res = await _academyService.EditTeacherAsync(id, teacher);
+            return Ok(res);
         }
         catch (Exception ex)
         {
@@ -47,12 +44,12 @@ public class DepartmentController : ControllerBase
         }
     }
 
-    [HttpDelete("DeleteDepartment/{id}")]
+    [HttpDelete("DeleteTeacher/{id}")]
     public async Task<IActionResult> DeleteAsync(string id)
     {
         try
         {
-           await _academyService.DeleteDepartmentAsync(id);
+            await _academyService.DeleteTeacherAsync(id);
             return Ok();
         }
         catch (Exception ex)
@@ -61,17 +58,17 @@ public class DepartmentController : ControllerBase
         }
     }
 
-    [HttpGet("GetAllDepartments")]
-    public async Task<List<Department>> GetAllAsync()
+    [HttpGet("GetAllTeachers")]
+    public async Task<List<Teacher>> GetAllAsync()
     {
         try
         {
-            return await _academyService.GetDepartmentsAsync();
+            return await _academyService.GetTeachersAsync();
         }
         catch (Exception ex)
         {
             throw;
         }
-        
     }
 }
+
