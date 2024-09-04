@@ -24,4 +24,17 @@ public interface IAcademyService
     public Task DeleteTeacherAsync(string id);
     public Task<List<Teacher>> GetTeachersAsync();
 
+
+    public Task<Group> AddGroupAsync(Group group);
+    public Task<Group> EditGroupAsync(string id, Group group);
+    public Task DeleteGroupAsync(string id);
+    public Task<List<Group>> GetGroupsAsync();
+    public Task<Group> ChangeGroupTeacherAsync(string groupId, string teacherId);
+
+
+    public Task<Student> AddStudentAsync(Student student);
+    public Task<Student> EditStudentAsync(string id, Student student);
+    public Task DeleteStudentAsync(string id);
+    public Task<List<Student>> GetStudentsAsync();
+
 }

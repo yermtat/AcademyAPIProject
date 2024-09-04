@@ -40,6 +40,10 @@ public class AcademyService : IAcademyService
         try
         {
             var department = await _context.Departments.FindAsync(id);
+            if (department == null)
+            {
+                throw new Exception("Department not found");
+            }
             department.Name = name;
 
             await _context.SaveChangesAsync();
@@ -56,6 +60,10 @@ public class AcademyService : IAcademyService
         try
         {
             var department = await _context.Departments.FindAsync(id);
+            if (department == null)
+            {
+                throw new Exception("Department not found");
+            }
             _context.Departments.Remove(department);
 
             await _context.SaveChangesAsync();
@@ -101,6 +109,11 @@ public class AcademyService : IAcademyService
         {
             var editedFaculty = await _context.Faculties.FindAsync(id);
 
+            if (editedFaculty == null)
+            {
+                throw new Exception("Faculty not found");
+            }
+
             editedFaculty.Name = faculty.Name;
             editedFaculty.DepartmentsNumber = faculty.DepartmentsNumber;
 
@@ -119,6 +132,11 @@ public class AcademyService : IAcademyService
         try
         {
             var faculty = await _context.Faculties.FindAsync(id);
+            if (faculty == null)
+            {
+                throw new Exception("Faculty not found");
+            }
+
             _context.Faculties.Remove(faculty);
             await _context.SaveChangesAsync();
         }
@@ -213,6 +231,206 @@ public class AcademyService : IAcademyService
         try
         {
             return await _context.Teachers.ToListAsync();
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+
+    #endregion
+
+    #region groups
+
+    public async Task<Group> AddGroupAsync(Group group)
+    {
+        try
+        {
+            var newGroup = new Group
+            {
+                Name = group.Name,
+                Year = group.Year,
+                TeacherId = group.TeacherId,
+                FacultyId = group.FacultyId
+            };
+
+            await _context.Groups.AddAsync(newGroup);
+            await _context.SaveChangesAsync();
+
+            return newGroup;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task<Group> EditGroupAsync(string id, Group group)
+    {
+        try
+        {
+            var existingGroup = await _context.Groups.FindAsync(id);
+
+            if (existingGroup == null)
+            {
+                throw new Exception("Group not found");
+            }
+
+            existingGroup.Name = group.Name;
+            existingGroup.Year = group.Year;
+            existingGroup.TeacherId = group.TeacherId;
+            existingGroup.FacultyId = group.FacultyId;
+
+            await _context.SaveChangesAsync();
+
+            return existingGroup;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task DeleteGroupAsync(string id)
+    {
+        try
+        {
+            var group = await _context.Groups.FindAsync(id);
+            if (group == null)
+            {
+                throw new Exception("Group not found");
+            }
+
+            _context.Groups.Remove(group);
+            await _context.SaveChangesAsync();
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task<List<Group>> GetGroupsAsync()
+    {
+        try
+        {
+            return await _context.Groups
+                .ToListAsync();
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task<Group> ChangeGroupTeacherAsync(string groupId, string teacherId)
+    {
+        try
+        {
+            var group = await _context.Groups.FindAsync(groupId);
+            if (group == null)
+            {
+                throw new Exception("Group not found");
+            }
+
+            //var teacher = await _context.Teachers.FindAsync(teacherId);
+            //if (teacher == null)
+            //{
+            //    throw new Exception("Teacher not found");
+            //}
+
+            group.TeacherId = teacherId;
+            await _context.SaveChangesAsync();
+
+            return group;
+
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+
+    #endregion
+
+    #region students
+
+    public async Task<Student> AddStudentAsync(Student student)
+    {
+        try
+        {
+            var newStudent = new Student
+            {
+                Name = student.Name,
+                Surname = student.Surname,
+                Age = student.Age,
+                GroupId = student.GroupId
+            };
+
+            await _context.Students.AddAsync(newStudent);
+            await _context.SaveChangesAsync();
+
+            return newStudent;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task<Student> EditStudentAsync(string id, Student student)
+    {
+        try
+        {
+            var existingStudent = await _context.Students.FindAsync(id);
+
+            if (existingStudent == null)
+            {
+                throw new Exception("Student not found");
+            }
+
+            existingStudent.Name = student.Name;
+            existingStudent.Surname = student.Surname;
+            existingStudent.Age = student.Age;
+            existingStudent.GroupId = student.GroupId;
+
+            await _context.SaveChangesAsync();
+
+            return existingStudent;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task DeleteStudentAsync(string id)
+    {
+        try
+        {
+            var student = await _context.Students.FindAsync(id);
+            if (student == null)
+            {
+                throw new Exception("Student not found");
+            }
+
+            _context.Students.Remove(student);
+            await _context.SaveChangesAsync();
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task<List<Student>> GetStudentsAsync()
+    {
+        try
+        {
+            return await _context.Students
+                .ToListAsync();
         }
         catch
         {

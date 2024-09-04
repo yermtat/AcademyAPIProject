@@ -14,6 +14,6 @@ public class Student
 
 
     public string? GroupId { get; set; }
-    public Group Group { get; set; }
+    public Group? Group { get; set; }
 
 }
