@@ -1,5 +1,5 @@
 ﻿using AcademyAPI.Data.Contexts;
-using AcademyAPI.Data.Models;
+using AcademyAPI.Data.Models.Academy;
 using AcademyAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;

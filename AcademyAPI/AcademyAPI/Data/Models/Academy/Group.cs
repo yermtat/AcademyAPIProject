@@ -1,4 +1,4 @@
-﻿namespace AcademyAPI.Data.Models;
+﻿namespace AcademyAPI.Data.Models.Academy;
 
 public class Group
 {

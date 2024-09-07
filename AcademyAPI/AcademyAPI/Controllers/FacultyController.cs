@@ -1,4 +1,4 @@
-﻿using AcademyAPI.Data.Models;
+﻿using AcademyAPI.Data.Models.Academy;
 using AcademyAPI.Services.Classes;
 using AcademyAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Http;

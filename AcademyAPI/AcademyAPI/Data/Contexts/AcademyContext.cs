@@ -1,4 +1,4 @@
-﻿using AcademyAPI.Data.Models;
+﻿using AcademyAPI.Data.Models.Academy;
 using Microsoft.EntityFrameworkCore;
 
 namespace AcademyAPI.Data.Contexts;

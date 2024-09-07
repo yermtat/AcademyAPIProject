@@ -1,4 +1,4 @@
-﻿using AcademyAPI.Data.Models;
+﻿using AcademyAPI.Data.Models.Academy;
 
 namespace AcademyAPI.Services.Interfaces;
 
