@@ -77,6 +77,7 @@ builder.Services.AddScoped<IAcademyService, AcademyService>();
 builder.Services.AddScoped<LoginUserValidator>();
 builder.Services.AddScoped<RegistrationUserValidator>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 var app = builder.Build();
 

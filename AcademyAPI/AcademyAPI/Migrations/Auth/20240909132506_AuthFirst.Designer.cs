@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AcademyAPI.Migrations.Auth
 {
     [DbContext(typeof(AuthContext))]
-    [Migration("20240906154126_AuthFirst")]
+    [Migration("20240909132506_AuthFirst")]
     partial class AuthFirst
     {
         /// <inheritdoc />
@@ -39,6 +39,12 @@ namespace AcademyAPI.Migrations.Auth
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Username")
                         .IsRequired()
