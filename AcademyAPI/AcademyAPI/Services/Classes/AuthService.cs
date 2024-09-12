@@ -108,4 +108,27 @@ public class AuthService : IAuthService
         };
     }
 
+    public async Task LogoutAsync(TokenData token)
+    {
+        if (token != null) throw new Exception("Invalid request");
+
+        try
+        {
+            var principal = _tokenService.GetPrincipalFromToken(token.AccessToken);
+
+            var username = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            var user = _authContext.Users.FirstOrDefault(c => c.Username == username);
+
+            user.RefreshToken = null;
+            user.RefreshTokenExpiryTime = DateTime.Now;
+
+            await _authContext.SaveChangesAsync();
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
 }

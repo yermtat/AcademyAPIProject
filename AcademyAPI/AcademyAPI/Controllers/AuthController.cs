@@ -14,14 +14,12 @@ public class AuthController : ControllerBase
     private readonly IAuthService _authService;
     private readonly LoginUserValidator _loginUserValidator;
     private readonly RegistrationUserValidator _registrationUserValidator;
-    private readonly ITokenService _tokenService;
 
-    public AuthController(IAuthService authService, LoginUserValidator loginUserValidator, RegistrationUserValidator registrationUserValidator, ITokenService tokenService)
+    public AuthController(IAuthService authService, LoginUserValidator loginUserValidator, RegistrationUserValidator registrationUserValidator)
     {
         _authService = authService;
         _loginUserValidator = loginUserValidator;
         _registrationUserValidator = registrationUserValidator;
-        _tokenService = tokenService;
     }
 
     [HttpPost("Register")]
@@ -60,7 +58,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("Refresh")]
-    public async Task<IActionResult> RefreshTokenAsync(RefreshUser refresh)
+    public async Task<IActionResult> RefreshTokenAsync([FromBody] RefreshUser refresh)
     {
         try
         {
@@ -69,6 +67,19 @@ public class AuthController : ControllerBase
             if (newToken == null) return BadRequest("Invalid token");
 
             return Ok(newToken);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    public async Task<IActionResult> LogoutAsync([FromBody] TokenData token)
+    {
+        try
+        {
+            await _authService.LogoutAsync(token);
+            return Ok("Logout successfully");
         }
         catch (Exception ex)
         {
